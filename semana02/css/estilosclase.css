@@ -1,0 +1,79 @@
+/* colores de las letras */
+
+.colorcya{
+    color: cyan;
+}
+
+.colorrojo{
+    color: red;
+}
+
+
+/* Tamano de las letras */
+.titulo{
+    font-size: 30px;
+}
+
+.subtitulos{
+    font-size: 20px;
+}
+
+.parrafos{
+    font-size: 12px;
+}
+
+
+/* elementos de alineamiento de texto */
+.alinearcentro{
+    text-align: center;
+}
+
+.alinearizquierda{
+    text-align: left;
+}
+
+.alinearderecha{
+    text-align: right;
+}
+
+
+/* Botones */
+
+
+.botonsalva{
+    background-color: green;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.botoncancelar{
+    background-color: red;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+
+.boton{
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.textosalva{
+    background-color: green;
+    color: white;
+
+}
+
+.textocancelar{
+    background-color: red;
+    color: white;
+}
