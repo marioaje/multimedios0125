@@ -84,31 +84,6 @@ body{
     text-decoration: none;
 }
 
-/* .navbar{
-    display:flex { 
-         ul li
-            display: flex;
-            justify-content: center;
-            background: red;
-            list-style: none;
-            padding: 9px;
-            margin: 0 15px;
-            color: black;
-        }
- }
-} */
-/* Version remasterizada
-.navbar {
-    display: flex;
-    justify-content: center;
-      ul {
-          list-style: none;
-     .li { 
-        padding:1rem
-    }
-} 
-} */
-
 .main{
     height: 600px;
 }
