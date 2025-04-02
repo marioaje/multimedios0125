@@ -28,5 +28,26 @@ document.getElementById("nomnbre").addEventListener("input", function(event){
 })
 
 
+//Ejemplo extra
+//evento personalizado
+const eventoSaludandoPersonalizado = new CustomEvent(
+    "miNombreEventoPersonalizado",
+    {
+        detail: { mensaje : "Saludos, " }
+    }
+);
+
+document.addEventListener( "miNombreEventoPersonalizado", function(event)
+{
+    document.getElementById("mensajedeparrafo").innerText = event.detail.mensaje;
+})
+
+///miNombreEventoPersonalizado
+document.getElementById("botonPersonalizadoEvento").addEventListener("click", function(event){
+    document.dispatchEvent(eventoSaludandoPersonalizado);
+})
+
+//mensajedeparrafo
+
 
 
