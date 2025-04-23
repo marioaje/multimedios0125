@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+
+    <div class="container">
+        <a name="" id="" class="btn btn-primary" onclick="crear()" role="button">Crear una cookie</a>
+        <a name="" id="" class="btn btn-success" onclick="leer()" role="button">Ver una cookie</a>
+        <a name="" id="" class="btn btn-danger" onclick="borrar()" role="button">Borrar una cookie</a>
+    </div>
+    
+    <div
+        class="container" id="resultado"
+    >
+        
+    </div>
+    
+
+    <script>
+        function crear() {
+            //max-age=3600 = 3600 segundos
+            //path=/ define el recurso o carpeta donde va estar disponible
+         /*   document.cookie = "usuario=Mario; max-age=3600 path=/";
+            document.cookie = "rol=admin; max-age=3600 path=/";
+            document.cookie = "datos=Informacion Mario; max-age=3600 path=/";
+*/
+            const datosCookie = {
+                usuarios:"Isaac",
+                roles:"Editor",
+                subtemadatos:"Nueva Info en json"
+            };
+
+            document.cookie = `informacion=${encodeURIComponent(JSON.stringify(datosCookie))}; max-age=3600 path=/`;
+
+            alert("Cookie creada");
+        }
+
+        function leer() {
+            let extraerInformacionCookie = document.cookie;
+            document.getElementById("resultado").innerText = extraerInformacionCookie;
+        }
+
+        function borrar() {
+            document.cookie = "usuario=; max-age=0 path=/";
+            document.cookie = "rol=; max-age=0 path=/";
+            document.cookie = "datos=; max-age=0 path=/";
+            alert("Cookie eliminada");
+        }
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
