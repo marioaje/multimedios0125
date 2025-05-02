@@ -33,30 +33,42 @@ const mensajeDelete = `
                     ></button>
                     <strong>Curso</strong> Accion Finalizada
                 </div>`;                
-// $(document).ready(function () {
-    
-// });
-document.addEventListener('DOMContentLoaded', () =>{
-
+$(document).ready(function () {
     obtenerCursos();
 
 
-    document.getElementById('formularioCrear').addEventListener('submit', (evento)=>{
-        evento.preventDefault();
+    $("#formularioCrear").submit(function (e) { 
+        e.preventDefault();
         crearCurso();
-    })
+    });
 
-    document.getElementById('formularioEditar').addEventListener('submit', (evento)=>{
-        evento.preventDefault();
+    $("#formularioEditar").submit(function (e) { 
+        e.preventDefault();
         actualizarCurso();
-    })
-    
-    document.getElementById('formularioEliminar').addEventListener('submit', (evento)=>{
-        evento.preventDefault();
-        eliminarCurso();
-    })
-    
+    });
+
 });
+// document.addEventListener('DOMContentLoaded', () =>{
+
+//     obtenerCursos();
+
+
+//     document.getElementById('formularioCrear').addEventListener('submit', (evento)=>{
+//         evento.preventDefault();
+//         crearCurso();
+//     })
+
+//     document.getElementById('formularioEditar').addEventListener('submit', (evento)=>{
+//         evento.preventDefault();
+//         actualizarCurso();
+//     })
+    
+//     document.getElementById('formularioEliminar').addEventListener('submit', (evento)=>{
+//         evento.preventDefault();
+//         eliminarCurso();
+//     })
+    
+// });
 
 
 
@@ -65,35 +77,71 @@ document.addEventListener('DOMContentLoaded', () =>{
 //CRUD
 export function obtenerCursos(){
     //Funcion nativa que consume APIs
-    //https://paginas-web-cr.com/Api/apis/ListaCurso.php
-    fetch(`${URL_API}${consultarAPI}`, 
-        { method: 'POST'})
-    .then(response => response.json())
-    .then(
-        data => cargarDatos(data.data)
-    )
-    .catch(error => console.error(error));
+    // //https://paginas-web-cr.com/Api/apis/ListaCurso.php
+    // fetch(`${URL_API}${consultarAPI}`, 
+    //     { method: 'POST'})
+    // .then(response => response.json())
+    // .then(
+    //     data => cargarDatos(data.data)
+    // )
+    // .catch(error => console.error(error));
 
+    $.ajax({
+        type: "POST",
+        url: `${URL_API}${consultarAPI}`,        
+        dataType: "json",
+        beforeSend: function(){
+            let htmlString = `
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            disabled
+                        >
+                            <span
+                                class="spinner-border spinner-border-sm"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>
+                            Loading...
+                        </button>`;
 
-$.ajax({
-    type: "POST",
-    url: `${URL_API}${consultarAPI}`,
-    data: "json",
-    dataType: "json",
-    success: function (response) {
-        cargarDatos(response.data)
-    },
-    error: function (param) {
-        alert("Se cayo");
-      }
-});
+            $("#mensajePersonalizado").html(htmlString);
+
+        },
+        success: function (response) {
+            console.log(response.data);
+            cargarDatos(response.data);
+            $("#mensajePersonalizado").html("");
+        },
+        error: function(xhr, status, error){
+            let htmlString = `<div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                >
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                    ></button>
+                    <strong>Error: </strong> ${error} <br>
+                    <strong>Status: </strong> ${status} <br>
+                    <strong>Xhr: </strong> ${xhr} <br>
+                </div>`;
+
+            $("#mensajePersonalizado").html(htmlString);
+        }
+    });
+
 
 }
 
 function cargarDatos(lista){
     //console.info(lista);
-    const tablaBody = document.getElementById('tablaBody');
-    tablaBody.innerHTML = '';
+    //const tablaBody = document.getElementById('tablaBody');
+    const $tablaBody = $('#tablaBody');
+    //tablaBody.innerHTML = '';
+    $tablaBody.empty();
 
     lista.forEach(element => {
         let fila = `        
@@ -125,57 +173,129 @@ function cargarDatos(lista){
                 </tr>
         `;
 
-        tablaBody.innerHTML += fila;
+        //tablaBody.innerHTML += fila;
+        $tablaBody.append(fila);
     });
 
 }
 
 function crearCurso(){
-    const nombre = document.getElementById('nombre').value;
-    const descripcion = document.getElementById('descripcion').value;
-    const tiempo = document.getElementById('tiempo').value;
+    alert("Creando");
+    // const nombre = document.getElementById('nombre').value;
+    // const descripcion = document.getElementById('descripcion').value;
+    // const tiempo = document.getElementById('tiempo').value;
+    const nombre = $("#nombre").val();
+    const descripcion = $("#descripcion").val();
+    const tiempo = $("#tiempo").val();
+
     const usuario = 'Prof Mario';
 
     const nuevoCurso = new CursoModel(null, nombre, descripcion, tiempo, usuario);
 
+
+
+    $.ajax({
+        type: "POST",
+        url: `${URL_API}InsertarCursos.php`, 
+        data: JSON.stringify(nuevoCurso),
+        contentType: 'application/json',              
+        dataType: "json",
+        beforeSend: function(){
+            let htmlString = `
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            disabled
+                        >
+                            <span
+                                class="spinner-border spinner-border-sm"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>
+                            Loading...
+                        </button>`;
+
+            $("#mensajePersonalizado").html(htmlString);
+
+        },
+        success: function (response) {
+            // console.log(response.data);
+            // cargarDatos(response.data);
+            finalizarCreacion(response);
+            $("#mensajePersonalizado").html("");
+            obtenerCursos();
+        },
+        error: function(xhr, status, error){
+            let htmlString = `<div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                >
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                    ></button>
+                    <strong>Error: </strong> ${error} <br>
+                    <strong>Status: </strong> ${status} <br>
+                    <strong>Xhr: </strong> ${xhr} <br>
+                </div>`;
+
+            $("#mensajePersonalizado").html(htmlString);
+        }
+    });
+
     //console.log(nuevoCurso);
-    fetch (`${URL_API}InsertarCursos.php`, 
-        { 
-            method: 'POST',
-            body: JSON.stringify(nuevoCurso)
-        })
-        .then(response => response.json())
-        .then(
-            data => {
-                finalizarCreacion(data);
-            }
-        )
-        .catch(error => console.error(error));
+    // fetch (`${URL_API}InsertarCursos.php`, 
+    //     { 
+    //         method: 'POST',
+    //         body: JSON.stringify(nuevoCurso)
+    //     })
+    //     .then(response => response.json())
+    //     .then(
+    //         data => {
+    //             finalizarCreacion(data);
+    //         }
+    //     )
+    //     .catch(error => console.error(error));
 
 }
 
 function finalizarCreacion(data) {
-    const mensajePersonalizado = document.getElementById('mensajePersonalizado');
+    //const mensajePersonalizado = document.getElementById('mensajePersonalizado');
 
-    mensajePersonalizado.innerHTML = mensajeSuccess;
+    //mensajePersonalizado.innerHTML = mensajeSuccess;
+    $("#mensajePersonalizado").html(mensajeSuccess);
 
-    document.getElementById('formularioCrear').reset();
+    //document.getElementById('formularioCrear').reset();
+    $('#formularioCrear')[0].reset();
 
-    const modalCrear = bootstrap.Modal.getInstance(document.getElementById('modalCrear'));
-    modalCrear.hide();
+    // const modalCrear = bootstrap.Modal.getInstance(document.getElementById('modalCrear'));
+    // modalCrear.hide();
+    //bootstrap.Modal.getInstance($('#modalCrear')[0].hide());
+    $('#modalCrear').modal('hide');
 
 }
 
 
 window.editarCurso = (id, nombre, descripcion, tiempo, usuario) =>{
 
-    document.getElementById('ideditar').value = id;
-    document.getElementById('nombreeditar').value = nombre;
-    document.getElementById('descripcioneditar').value = descripcion;
-    document.getElementById('tiempoeditar').value = tiempo;
-    document.getElementById('usuarioeditar').value = usuario;
-    const modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
-    modalEditar.show();
+    // document.getElementById('ideditar').value = id;
+    // document.getElementById('nombreeditar').value = nombre;
+    // document.getElementById('descripcioneditar').value = descripcion;
+    // document.getElementById('tiempoeditar').value = tiempo;
+    // document.getElementById('usuarioeditar').value = usuario;
+
+    $("#ideditar").val(id);
+    $("#nombreeditar").val(nombre);
+    $("#descripcioneditar").val(descripcion);
+    $("#tiempoeditar").val(tiempo);
+    $("#usuarioeditar").val(usuario);
+
+    // const modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
+    // modalEditar.show();
+
+    $("#modalEditar").modal('show');
 
     
  }
@@ -191,33 +311,93 @@ window.editarCurso = (id, nombre, descripcion, tiempo, usuario) =>{
 
     const editarCurso = new CursoModel(id, nombre, descripcion, tiempo, usuario);
 
+
+
+
+    $.ajax({
+        type: "POST",
+        url: `${URL_API}ActualizarCursos.php`, 
+        data: JSON.stringify(editarCurso),
+        contentType: 'application/json',              
+        dataType: "json",
+        beforeSend: function(){
+            let htmlString = `
+                        <button
+                            class="btn btn-success"
+                            type="button"
+                            disabled
+                        >
+                            <span
+                                class="spinner-border spinner-border-sm"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>
+                            Loading...
+                        </button>`;
+
+            $("#mensajePersonalizado").html(htmlString);
+
+        },
+        success: function (response) {
+            // console.log(response.data);
+            // cargarDatos(response.data);
+            finalizarEdicion(response);
+            $("#mensajePersonalizado").html("");
+            obtenerCursos();
+        },
+        error: function(xhr, status, error){
+            let htmlString = `<div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                >
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                    ></button>
+                    <strong>Error: </strong> ${error} <br>
+                    <strong>Status: </strong> ${status} <br>
+                    <strong>Xhr: </strong> ${xhr} <br>
+                </div>`;
+
+            $("#mensajePersonalizado").html(htmlString);
+        }
+    });
+
+
+
+
     //console.log(nuevoCurso);
-    fetch (`${URL_API}ActualizarCursos.php`, 
-        { 
-            method: 'POST',
-            body: JSON.stringify(editarCurso)
-        })
-        .then(response => response.json())
-        .then(
-            data => {
-                finalizarEdicion(data);
-            }
-        )
-        .catch(error => console.error(error));
+    // fetch (`${URL_API}ActualizarCursos.php`, 
+    //     { 
+    //         method: 'POST',
+    //         body: JSON.stringify(editarCurso)
+    //     })
+    //     .then(response => response.json())
+    //     .then(
+    //         data => {
+    //             finalizarEdicion(data);
+    //         }
+    //     )
+    //     .catch(error => console.error(error));
 
 
 
  }
 
 function finalizarEdicion(data){
-    const mensajePersonalizado = document.getElementById('mensajePersonalizado');
+    // const mensajePersonalizado = document.getElementById('mensajePersonalizado');
 
-    mensajePersonalizado.innerHTML = mensajeSuccess;
+    // mensajePersonalizado.innerHTML = mensajeSuccess;
+    $("#mensajePersonalizado").html(mensajeSuccess);
 
-    document.getElementById('formularioEditar').reset();
+    //document.getElementById('formularioEditar').reset();
+    $('#formularioEditar')[0].reset();
 
-    const modalEditar = bootstrap.Modal.getInstance(document.getElementById('modalEditar'));
-    modalEditar.hide();
+    // const modalEditar = bootstrap.Modal.getInstance(document.getElementById('modalEditar'));
+    // modalEditar.hide();
+    $("#modalEditar").modal("hide");
 
     obtenerCursos();
 }
