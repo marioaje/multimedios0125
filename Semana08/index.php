@@ -70,7 +70,10 @@ while ($a < 10) {
     $a++;
 }
 
+//Declaraciones de arreglos
 $arreglo = ["Mario", "Alberto", "Isaac"];
+$colors = array("red", "green", "blue", "yellow");
+
 foreach ($arreglo as $key) {
     # code...
     echo "----key: $key<br> ";
@@ -78,4 +81,9 @@ foreach ($arreglo as $key) {
 
 
     echo "Saludos clase";
+
+
+    function familyName($fname, $year, $day, $name, $email) {
+        echo "$fname Refsnes. Born in $year <br>";
+        }
 ?>
