@@ -33,25 +33,25 @@ clave: N]18zvue -->
     }
 
 
-    try {
-        $conexion = Conexion::conectar();
-        echo "Conexion exitosa";
+    // try {
+    //     $conexion = Conexion::conectar();
+    //     echo "Conexion exitosa";
 
-        //Comprobamos las tablas
-        $stmt = $conexion->query("SHOW TABLES");
-        $tablas = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    //     //Comprobamos las tablas
+    //     $stmt = $conexion->query("SHOW TABLES");
+    //     $tablas = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-        echo "<br> Tablas de MySQL";
-        foreach ($tablas as $item) {
-            # code...
-            echo "<br>--- $item";
-        }
+    //     echo "<br> Tablas de MySQL";
+    //     foreach ($tablas as $item) {
+    //         # code...
+    //         echo "<br>--- $item";
+    //     }
 
 
-    }
-    catch (Exception $e){
-            echo "Error al probar la conexion: ". $e->getMessage();
-    }
+    // }
+    // catch (Exception $e){
+    //         echo "Error al probar la conexion: ". $e->getMessage();
+    // }
 
 
 
