@@ -42,6 +42,17 @@
             <div
                 class="table-responsive"
             >
+
+    <!-- Button trigger modal -->
+                <button
+                    type="button"
+                    class="btn btn-primary btn-lg"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalId"
+                >
+                    Nuevo
+                </button>
+
                 <table
                     class="table table-primary"
                 >
@@ -56,17 +67,7 @@
                         <!-- return new Usuario($row['id'],$row['nombre'], $row['apellidos'], $row['estado']);; -->
                     </thead>
                     <tbody>
-                       <?php  foreach ($usuarios as $key) {
-                        # code..
-                        //print_r($key->id);
-                            // echo '
-                            //         <tr class="">
-                            //             <td scope="row">'.$key->id.'</td>
-                            //             <td>R1C2</td>
-                            //             <td>R1C3</td>
-                            //             <td>R1C3</td>
-                            //         </tr>';
-
+                       <?php  foreach ($usuarios as $key) {                    
                             echo "
                                     <tr class=''>
                                         <td scope='row'>$key->id</td>
@@ -75,15 +76,151 @@
                                         <td>$key->estado</td>
                                     </tr>";
                        }  ?>
-
-
-
                     </tbody>
                 </table>
             </div>
             
         </div>
         
+
+
+
+
+
+
+
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="modalId"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalTitleId"
+    aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">
+                    Modal title
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    
+<form method="post" action="../../controller/UsuarioController.php">
+
+
+                       <div class="mb-3">
+                            <label for="" class="form-label">Nombre</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="nombre"
+                                id="nombre"
+                                aria-describedby="helpId"
+                                placeholder=""
+                                required
+                            />
+                            <small id="helpId" class="form-text text-muted">Help text</small>
+                       </div>
+                       
+                       <div class="mb-3">
+                            <label for="" class="form-label">Apellidos</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="apellidos"
+                                id="apellidos"
+                                aria-describedby="helpId"
+                                placeholder=""
+                                required
+                            />
+                            <small id="helpId" class="form-text text-muted">Help text</small>
+                       </div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Estado</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="estado"
+                            id="estado"
+                            aria-describedby="helpId"
+                            placeholder=""
+                            required
+                        />
+                        <small id="helpId" class="form-text text-muted">Help text</small>
+                    </div>
+
+<div
+    class="row justify-content-center align-items-center g-2"
+>
+    <div class="col">
+        <button
+            type="reset"
+            class="btn btn-danger"
+        >
+            Limpiar
+        </button>
+                <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            Enviar
+        </button>
+    </div>
+</div>
+
+
+</form>
+
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var modalId = document.getElementById('modalId');
+
+    modalId.addEventListener('show.bs.modal', function (event) {
+          // Button that triggered the modal
+          let button = event.relatedTarget;
+          // Extract info from data-bs-* attributes
+          let recipient = button.getAttribute('data-bs-whatever');
+
+        // Use above variables to manipulate the DOM
+    });
+</script>
+
+
+
+
+
+
+
+
+
 
         <!-- Bootstrap JavaScript Libraries -->
         <script
