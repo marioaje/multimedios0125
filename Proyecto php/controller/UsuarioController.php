@@ -20,6 +20,10 @@
             return $this->dao->obtenerPorId($id);
         }
 
+     public function insertar(Usuario $objeto){
+            return $this->dao->insertar(objeto);
+        }
+
     }
 
     if ($_SERVER['REQUEST_METHOD'] == "POST"){

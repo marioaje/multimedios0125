@@ -40,7 +40,11 @@
 
         }
 
-
+        public function insertar(Usuario $objeto){
+            $sql = "INSERT INTO u484426513_ms125.usuarios (nombre, apellidos, estado) VALUES (?, ?, ?);";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$objeto->nombre, $objeto->apellidos, $objeto->estado]);
+        }
 
     }
 
