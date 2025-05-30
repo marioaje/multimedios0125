@@ -1,10 +1,3 @@
-<!-- es: srv863.hstgr.io 
-o puede usar esta IP como tu nombre de host: 45.88.196.5
-
-usuario: u484426513_ms125
-base de datos: u484426513_ms125
-clave: N]18zvue -->
-
 <?php
 
     class Conexion{

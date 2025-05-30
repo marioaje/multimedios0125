@@ -17,7 +17,6 @@
         public function obtenerTodos(){
             $stmtm = $this->pdo->query("SELECT * FROM u484426513_ms125.usuarios;");
 
-
             $resultado = [];
 
             while ($row = $stmtm->fetch(PDO::FETCH_ASSOC)){
